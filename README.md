@@ -1,13 +1,16 @@
 # SimpleTorrentTracker
 Simple Torrent Tracker (STT)
 
+Simple Torrent Tracker (STT) - Less than 200 lines php code.
+All info from [https://wiki.theory.org/BitTorrent_Tracker_Protocol]
+
 Need: 
-1. PHP 5.5+
-2. MYSQL/MariaDB
-3. Apache
+* PHP 5.5+
+* MYSQL/MariaDB
+* Apache
 
 Install:
-1. Create new DB and put dbschema.sql in.
-2. Put index.php, config.inc.php, func.inc.php, .htaccess on webserver
-3. Config config.inc.php with you DB setting.
-4. Done!
++ Create new DB and put dbschema.sql in.
++ Put index.php, config.inc.php, func.inc.php, .htaccess on webserver
++ Config config.inc.php with you DB setting.
++ Done!
