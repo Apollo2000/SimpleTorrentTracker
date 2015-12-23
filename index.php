@@ -112,12 +112,7 @@ else // Scrape MOD
 	// Send results to client
 	$output = array('files' => $files, 'flags' => array('min_request_interval' => intval($min_scrape_interval*60)));
 }
-$a = bencode($output);	
-echo $a;
-// Logging
-$output = "----- ".$ip."/ : ".date("d/m/y H:i:s")." -----\noutput - ".print_r($output, true)."\naction - ".print_r($action, true)."GET - ".print_r($_GET, true);
-$output .= "URL: ".$_SERVER['REQUEST_URI']."\nQuery: ".mysqli_info($DB)."\nOutput:".$a."\n";
-file_put_contents('installer.txt', $output."********************* END *********************\n\n".file_get_contents('installer.txt'));
+echo bencode($output);	
 mysqli_close($DB);
 exit;
 ?>
