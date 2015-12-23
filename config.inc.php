@@ -1,10 +1,10 @@
 <?
 // Parameters for database
 $db_server = 'localhost';
-$db_user = 'apolloip_tracker';
-$db_pass = 'navnav1995';
-$db_db = 'apolloip_tracker';
-$db_table = 'ApolloTracker_Peers';
+$db_user = '';
+$db_pass = '';
+$db_db = '';
+$db_table = 'STT_Peers';
 
 // Peers should wait at least this many minutes between announcements (Max 1440).
 $min_announce_interval = 30; // minutes. 
