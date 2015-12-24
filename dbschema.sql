@@ -13,3 +13,6 @@ CREATE TABLE `STT_Peers` (
 CREATE EVENT `STT_Clean` 
 ON SCHEDULE EVERY 10 MINUTE 
 DO DELETE FROM `STT_Peers` WHERE `update_time` < NOW() - INTERVAL 1 DAY;
+
+/* As admin set event scheduler on */
+set GLOBAL event_scheduler=ON;
