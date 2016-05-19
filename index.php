@@ -4,7 +4,7 @@
  * Base on OpenTracker WhitSoft project (2009)
  * By BitTorrent Tracker Protocol (https://wiki.theory.org)
  * Need: Linux / PHP 5.5+ / Apache / MYSQL
- * Version 1.02
+ * Version 1.02 - Add event field
  */
 
 // Block browsers get info from tracker
