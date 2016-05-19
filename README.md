@@ -10,7 +10,7 @@ Need:
 * Apache
 
 Install:
-+ Create new DB and put dbschema.sql in.
++ Import to DB file dbschema.sql.
 + Put index.php, config.inc.php, func.inc.php, .htaccess on webserver
 + Config config.inc.php with you DB setting.
 + Done!
