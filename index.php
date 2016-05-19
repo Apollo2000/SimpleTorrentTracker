@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  * Simple Torrent Tracker PHP - by Apollo (2016)
  * Base on OpenTracker WhitSoft project (2009)
@@ -37,27 +37,26 @@ if ($action["path"]!= '/scrape')
 	if ($ip === false) exit("Unable to resolve ip");
 
 	// Get announce event
-	if (isset($_GET['event'])){
-		if ($_GET['event'] == 'stopped') $expire_time=0;
-		$left = ($_GET['event'] == 'completed') ? 0 : $_GET['left'];
-	}
+	if (isset($_GET['event']) && ($_GET['event'] == 'stopped'))	 $expire_time=0;
+	 
+	$left = (isset($_GET['event']) && ($_GET['event'] == 'completed')) ? 0 : $_GET['left'];
 	
 	// Connect to DB
 	$DB = mysqli_connect($db_server, $db_user, $db_pass,$db_db) or exit("DB Error: Can't connect - ".mysqli_connect_error());
 
 	// Remove stopped peer
-	if ($_GET['event'] == 'stopped')
+	if (isset($_GET['event']) && $_GET['event'] == 'stopped')
 		mysqli_query($DB,sprintf("DELETE FROM `$db_table` WHERE `info_hash` ='%s' AND `peer_id`='%s';",mysqli_real_escape_string($DB,$_GET['info_hash']),mysqli_real_escape_string($DB,$_GET["peer_id"]))) or exit("DB Error: Can't run DELETE - ".mysqli_connect_error());
 
 	// Update peer in DB
-	$columns = '`info_hash`, `ip`, `port`, `peer_id`, `uploaded`, `downloaded`, `left`, `update_time`';
-	$values = sprintf("'%s', INET_ATON('$ip'), '".$_GET['port']."', '%s', '".$_GET['uploaded']."', '".$_GET['downloaded']."', '$left', NOW()",mysqli_real_escape_string($DB,$_GET['info_hash']),mysqli_real_escape_string($DB,$_GET["peer_id"]));
+	$columns = '`info_hash`, `ip`, `port`, `peer_id`, `uploaded`, `downloaded`, `left`, `event`, `update_time`';
+	$values = sprintf("'%s', INET_ATON('$ip'), '".$_GET['port']."', '%s', '".$_GET['uploaded']."', '".$_GET['downloaded']."', '$left','".(isset($_GET['event'])?$_GET['event']:"")."', NOW()",mysqli_real_escape_string($DB,$_GET['info_hash']),mysqli_real_escape_string($DB,$_GET["peer_id"]));
 	$replace = ("REPLACE INTO `$db_table` ($columns) VALUES ($values);");
 	mysqli_query($DB,$replace) or exit("DB Error: Can't run REPLACE - ".mysqli_connect_error());
 
 	// Get peers info from DB
 	$max_peers = (isset($_GET["numwant"]) && is_numeric($_GET["numwant"]) && ($_GET["numwant"]>0) && ($_GET["numwant"]<$max_ann_peers)?$_GET["numwant"]:$max_ann_peers);
-	$query = mysqli_query($DB,sprintf("SELECT INET_NTOA(`ip`) as `ip`, `port`, `peer_id` FROM `$db_table` WHERE `info_hash` = '%s' AND `update_time` > NOW() - INTERVAL $expire_time MINUTE ORDER BY RAND() LIMIT $max_peers;",mysqli_real_escape_string($DB,$_GET['info_hash']))) or exit("DB Error: Can't run QUERY - ".mysqli_connect_error());
+	$query = mysqli_query($DB,sprintf("SELECT INET_NTOA(`ip`) as `ip`, `port`, `peer_id` FROM `$db_table` WHERE $db_table.ip <> INET_ATON('$ip') AND `info_hash` = '%s' AND `update_time` > NOW() - INTERVAL $expire_time MINUTE ORDER BY RAND() LIMIT $max_peers;",mysqli_real_escape_string($DB,$_GET['info_hash']))) or exit("DB Error: Can't run QUERY - ".$q);
 
 	// Peers output method
 	$peers = Array();							
