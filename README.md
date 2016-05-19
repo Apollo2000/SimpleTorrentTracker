@@ -2,7 +2,8 @@
 Simple Torrent Tracker (STT)
 
 Simple Torrent Tracker (STT) - Less than 200 lines php code.
-All info from [https://wiki.theory.org/BitTorrent_Tracker_Protocol]
+
+Base on Bitorrent Tracker Protocol [https://wiki.theory.org/BitTorrent_Tracker_Protocol]
 
 Need: 
 * PHP 5.5+
